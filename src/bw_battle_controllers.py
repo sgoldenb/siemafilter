@@ -90,8 +90,10 @@ class _ChannelController(IChannelController):
         else:
             text = message.data
 
-        text = text +" en" if testIfEnglish(text) else text + " nonEn"
-        self._channel.addMessage(text)
+        if testIfEnglish(message.data):
+            text = text
+            self._channel.addMessage(text)
+            
         if BattleReplay.g_replayCtrl.isRecording:
             BattleReplay.g_replayCtrl.onBattleChatMessage(text, isCurrent)
         if self._view:
